@@ -1,80 +1,150 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Monitor, Zap, Share2, Users, BarChart2, Shield } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import {
+    Monitor, Zap, Share2, Users, BarChart2, Shield,
+    Grid3X3, Filter, Megaphone, Link as LinkIcon,
+    MessageSquare, Map, Palette, Globe, TrendingUp
+} from 'lucide-react';
+import { PageLayout } from '@/components/page-layout';
 import RadialOrbitalTimeline from '@/components/ui/radial-orbital-timeline';
-import { Parallax3DLayer, SectionBackground } from '@/components/three';
 import { ServiceAccordion } from '@/components/ui/service-accordion';
 import { SectionTransition, StaggerContainer, StaggerItem, SectionDivider } from '@/components/ui/section-transition';
 import { Card, CardContent } from '@/components/ui/card';
+import { GlowingCard } from '@/components/ui/glowing-card';
+import { MagneticText } from '@/components/ui/morphing-cursor';
 
 const servicesData = [
     {
         id: 1,
-        title: "Custom Websites",
-        date: "Core",
-        content: "High-converting landing pages and booking systems that turn visitors into paying clients. Mobile-first design with blazing fast performance.",
-        category: "Web",
-        icon: Monitor,
-        relatedIds: [2, 3],
+        title: "Google Workspace",
+        date: "Ops",
+        content: "Complete organization and configuration to streamline your business operations and enhance team collaboration.",
+        category: "Operations",
+        icon: Grid3X3,
+        relatedIds: [2, 6],
         status: "completed" as const,
-        energy: 95,
+        energy: 90,
     },
     {
         id: 2,
-        title: "Workflow Automation",
+        title: "Client Management (CRM)",
         date: "Core",
-        content: "Automate repetitive tasks, email sequences, and client onboarding. Save 20+ hours every week with smart automation systems.",
-        category: "Automation",
-        icon: Zap,
+        content: "Tailored client management systems designed specifically for your business, from simple contact management to complex solutions.",
+        category: "Systems",
+        icon: Users,
         relatedIds: [1, 3, 4],
         status: "completed" as const,
         energy: 100,
     },
     {
         id: 3,
-        title: "System Integration",
-        date: "Core",
-        content: "Connect your tools seamlessly—CRM, payment processors, calendars, and more. One unified ecosystem for your business.",
-        category: "Integration",
-        icon: Share2,
-        relatedIds: [2, 4],
+        title: "Campaign Design",
+        date: "Growth",
+        content: "Strategic campaign design implementation that converts prospects into loyal customers through data-driven strategies.",
+        category: "Marketing",
+        icon: Megaphone,
+        relatedIds: [2, 4, 12],
         status: "in-progress" as const,
         energy: 85,
     },
     {
         id: 4,
-        title: "Client Portals",
-        date: "Premium",
-        content: "Custom dashboards where clients access resources, track progress, and engage with your content. White-labeled to your brand.",
-        category: "Platform",
-        icon: Users,
+        title: "Sales Funnels",
+        date: "Growth",
+        content: "Tailor-crafted sales funnels optimized for your specific audience, from lead capture to conversion optimization.",
+        category: "Marketing",
+        icon: Filter,
         relatedIds: [3, 5],
+        status: "in-progress" as const,
+        energy: 95,
+    },
+    {
+        id: 5,
+        title: "Web Solutions",
+        date: "Core",
+        content: "Complete web solutions from fast templates to custom-coded masterpieces, built to your exact specifications.",
+        category: "Dev",
+        icon: Monitor,
+        relatedIds: [4, 6, 11],
+        status: "completed" as const,
+        energy: 95,
+    },
+    {
+        id: 6,
+        title: "Automation Crafting",
+        date: "Core",
+        content: "Streamline business processes with cutting-edge tech. Automatically deliver content and access without manual work.",
+        category: "Automation",
+        icon: Zap,
+        relatedIds: [1, 2, 5],
+        status: "completed" as const,
+        energy: 100,
+    },
+    {
+        id: 7,
+        title: "Affiliate Systems",
+        date: "Scale",
+        content: "Purpose-built affiliate management systems that scale your referral program and maximize revenue through partnerships.",
+        category: "Growth",
+        icon: LinkIcon,
+        relatedIds: [4, 12],
+        status: "pending" as const,
+        energy: 75,
+    },
+    {
+        id: 8,
+        title: "Community Apps",
+        date: "Scale",
+        content: "Custom community app design and publishing that engages your audience and builds lasting relationships.",
+        category: "Product",
+        icon: MessageSquare,
+        relatedIds: [5, 10],
         status: "in-progress" as const,
         energy: 80,
     },
     {
-        id: 5,
-        title: "Analytics & Reporting",
-        date: "Premium",
-        content: "Data-driven insights to understand your business performance and client behavior. Make informed decisions with real-time dashboards.",
-        category: "Data",
-        icon: BarChart2,
-        relatedIds: [4, 6],
-        status: "pending" as const,
-        energy: 70,
+        id: 9,
+        title: "Path Strategy",
+        date: "Strategy",
+        content: "Client path strategy and consulting to optimize your business processes and accelerate growth through expert guidance.",
+        category: "Consulting",
+        icon: Map,
+        relatedIds: [2, 10],
+        status: "completed" as const,
+        energy: 85,
     },
     {
-        id: 6,
-        title: "Ongoing Support",
-        date: "Always",
-        content: "We're here when you need us—updates, fixes, and improvements as you grow. Dedicated account management for enterprise clients.",
-        category: "Support",
-        icon: Shield,
-        relatedIds: [1, 5],
+        id: 10,
+        title: "Branding Strategy",
+        date: "Brand",
+        content: "Comprehensive branding strategy development creating a cohesive identity that resonates with your target audience.",
+        category: "Design",
+        icon: Palette,
+        relatedIds: [5, 8],
         status: "completed" as const,
         energy: 90,
+    },
+    {
+        id: 11,
+        title: "Domain Management",
+        date: "Ops",
+        content: "Complete domain services including registration, DNS, SSL, and ongoing maintenance to keep your presence secure.",
+        category: "Infra",
+        icon: Globe,
+        relatedIds: [1, 5],
+        status: "completed" as const,
+        energy: 60,
+    },
+    {
+        id: 12,
+        title: "Meta Advertising",
+        date: "Growth",
+        content: "Strategic advertising campaigns across Facebook and Instagram that reach your ideal customers and drive results.",
+        category: "Marketing",
+        icon: TrendingUp,
+        relatedIds: [3, 4],
+        status: "pending" as const,
+        energy: 85,
     },
 ];
 
@@ -82,33 +152,33 @@ const servicesData = [
 const serviceCards = [
     {
         icon: Monitor,
-        title: "Custom Websites",
-        description: "High-converting landing pages and booking systems that turn visitors into clients.",
+        title: "Web Solutions",
+        description: "Complete web solutions from fast templates to custom-coded masterpieces.",
     },
     {
         icon: Zap,
-        title: "Workflow Automation",
-        description: "Automate repetitive tasks and save 20+ hours every week.",
-    },
-    {
-        icon: Share2,
-        title: "System Integration",
-        description: "Connect CRM, payments, calendars—one unified ecosystem.",
+        title: "Automation",
+        description: "Streamline processes and automatically deliver content without manual work.",
     },
     {
         icon: Users,
-        title: "Client Portals",
-        description: "Custom dashboards white-labeled to your brand.",
+        title: "Client Management",
+        description: "Tailored CRM systems designed specifically for your business needs.",
     },
     {
-        icon: BarChart2,
-        title: "Analytics & Reporting",
-        description: "Real-time dashboards for data-driven decisions.",
+        icon: Filter,
+        title: "Sales Funnels",
+        description: "Tailor-crafted funnels optimized for conversion and lead capture.",
     },
     {
-        icon: Shield,
-        title: "Ongoing Support",
-        description: "Updates, fixes, and improvements as you grow.",
+        icon: Palette,
+        title: "Branding Strategy",
+        description: "Cohesive brand identity development that resonates with your audience.",
+    },
+    {
+        icon: TrendingUp,
+        title: "Meta Advertising",
+        description: "Strategic campaigns across Facebook & Instagram to drive results.",
     },
 ];
 
@@ -118,76 +188,68 @@ const ServicesPage = () => {
     }, []);
 
     return (
-        <Parallax3DLayer>
-            <div className="min-h-screen bg-dark font-sans text-white overflow-x-hidden">
-                <Navbar />
-
-                {/* Hero Section - What We Build */}
-                <section className="relative pt-32 pb-16 min-h-[80vh]">
-                    <SectionBackground particleCount={30} showMouseLight={false} />
-                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                        <SectionTransition type="fadeUp" className="text-center mb-12">
-                            <motion.h1
-                                initial={{ opacity: 0, y: -20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
-                            >
-                                What We <span className="text-gradient-nature">Build</span>
-                            </motion.h1>
-                            <motion.p
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.2 }}
-                                className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto"
-                            >
-                                Comprehensive tech solutions designed for coaches and consultants
-                            </motion.p>
-                        </SectionTransition>
-
-                        {/* Service Cards Grid */}
-                        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                            {serviceCards.map((service, index) => (
-                                <StaggerItem key={index} type="scaleUp">
-                                    <Card className="bg-surface/50 border-accent/10 hover:border-accent/30 transition-all duration-300 h-full group hover:shadow-[0_0_30px_rgba(14,165,233,0.15)]">
-                                        <CardContent className="p-6">
-                                            <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-4 group-hover:bg-accent/20 transition-colors">
-                                                <service.icon className="w-6 h-6 text-accent" />
-                                            </div>
-                                            <h3 className="text-xl font-bold text-white mb-2">{service.title}</h3>
-                                            <p className="text-gray-400 text-sm">{service.description}</p>
-                                        </CardContent>
-                                    </Card>
-                                </StaggerItem>
-                            ))}
-                        </StaggerContainer>
-                    </div>
-                </section>
-
-                {/* Interactive Orbital Timeline */}
-                <section className="py-12 sm:py-16 relative">
-                    <SectionDivider direction="top" />
-                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                        <SectionTransition type="fadeUp" className="text-center mb-6 sm:mb-8">
-                            <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Service Ecosystem</h2>
-                            <p className="text-gray-400 text-sm sm:text-base">Click on any node to explore how our services connect</p>
-                        </SectionTransition>
+        <PageLayout>
+            {/* Hero Section - Service Ecosystem */}
+            <section className="relative pt-32 pb-16 min-h-[80vh] bg-white">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <SectionTransition type="fadeUp" className="text-center mb-8 sm:mb-12 flex flex-col items-center gap-6">
+                        <MagneticText
+                            text="SERVICE ECOSYSTEM"
+                            hoverText="EXPLORE NOW"
+                            className="bg-transparent"
+                            textClassName="text-4xl md:text-5xl lg:text-6xl"
+                        />
+                        <div className="max-w-2xl mx-auto">
+                            <MagneticText
+                                text="Explore how our interconnected services create a powerful engine for your business growth."
+                                hoverText="Click on any node to learn more about our services."
+                                className="bg-transparent"
+                                textClassName="text-lg sm:text-xl font-normal"
+                            />
+                        </div>
+                    </SectionTransition>
+                    <div className="py-8">
                         <RadialOrbitalTimeline timelineData={servicesData} />
                     </div>
-                </section>
+                </div>
+            </section>
 
-                {/* Our Process - Interactive Accordion */}
-                <section className="py-16 sm:py-24 bg-gradient-to-b from-dark to-dark-blue/20 relative">
-                    <SectionDivider direction="both" color="rgba(15, 23, 42, 0.3)" />
-                    <ServiceAccordion
-                        title="Our Process"
-                        subtitle="From discovery to delivery, here's how we transform your vision into a powerful digital presence that drives results."
-                    />
-                </section>
+            {/* Our Process - Interactive Accordion */}
+            <section className="py-16 sm:py-24 bg-gray-50 relative">
+                <SectionDivider direction="top" color="#FFFFFF" />
+                <ServiceAccordion
+                    title="Our Process"
+                    subtitle="From discovery to delivery, here's how we transform your vision into a powerful digital presence that drives results."
+                />
+            </section>
 
-                <Footer />
-            </div>
-        </Parallax3DLayer>
+            {/* What We Build - Grid */}
+            <section className="py-16 sm:py-24 relative bg-white">
+                <SectionDivider direction="top" color="#f9fafb" />
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <SectionTransition type="fadeUp" className="text-center mb-12 sm:mb-16">
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-black">What We Build</h2>
+                        <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
+                            Comprehensive tech solutions designed for coaches and consultants
+                        </p>
+                    </SectionTransition>
+
+                    {/* Service Cards Grid - Glowing Effect */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                        {serviceCards.map((service, index) => (
+                            <GlowingCard
+                                key={index}
+                                title={service.title}
+                                description={service.description}
+                                icon={<service.icon className="w-6 h-6 text-black" />}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </section>
+        </PageLayout>
     );
 };
 
 export default ServicesPage;
+

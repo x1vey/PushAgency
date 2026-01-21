@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { TreeScene, Parallax3DLayer } from '@/components/three';
+import { PageLayout } from '@/components/page-layout';
 import { Spotlight } from '@/components/ui/spotlight';
-import { SectionTransition, StaggerContainer, StaggerItem, SectionDivider } from '@/components/ui/section-transition';
+import { SectionTransition, SectionDivider } from '@/components/ui/section-transition';
+import { DotScreenShader } from '@/components/ui/dot-shader-background';
 
 const features = [
     {
@@ -122,33 +121,20 @@ const AboutPage = () => {
     const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.2]);
 
     return (
-        <Parallax3DLayer>
-            <div ref={containerRef} className="min-h-screen bg-dark font-sans text-white overflow-x-hidden">
-                <Navbar />
-
+        <PageLayout>
+            <div ref={containerRef} className="relative bg-white text-black">
                 {/* Hero Section */}
                 <motion.section
                     ref={heroRef}
                     style={{ opacity: heroOpacity }}
-                    className="relative h-screen flex items-center justify-center overflow-hidden"
+                    className="relative h-screen flex items-center justify-center overflow-hidden bg-white"
                 >
-                    <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#0EA5E9" />
+                    {/* Dot Shader Background */}
+                    <div className="absolute inset-0 z-0">
+                        <DotScreenShader />
+                    </div>
 
-                    {/* Three.js Tree Background */}
-                    <motion.div
-                        style={{ scale: heroScale }}
-                        className="absolute inset-0 z-0 will-change-transform"
-                    >
-                        <div className="absolute inset-0 w-full h-full">
-                            <TreeScene
-                                className="w-full h-full"
-                                scrollProgress={scrollProgress}
-                                textItems={textItems}
-                                visibleTextIndex={visibleTextIndex}
-                            />
-                        </div>
-                        <div className="absolute inset-0 bg-gradient-to-b from-dark/40 via-dark/20 to-dark pointer-events-none z-10" />
-                    </motion.div>
+                    <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#333333" />
 
                     <div className="container mx-auto px-6 relative z-10 text-center">
                         <motion.div
@@ -157,13 +143,13 @@ const AboutPage = () => {
                             transition={{ duration: 0.8 }}
                             className="max-w-4xl mx-auto"
                         >
-                            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light mb-6 tracking-tight">
+                            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light mb-6 tracking-tight text-black">
                                 About
                             </h1>
-                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light mb-8 tracking-tight text-gradient-nature">
+                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light mb-8 tracking-tight text-black">
                                 Catalyst Digital
                             </h2>
-                            <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
                                 Step into the world of digital transformation. We are more than developers—we are architects of scalable, intelligent systems that empower businesses to thrive.
                             </p>
                         </motion.div>
@@ -180,15 +166,15 @@ const AboutPage = () => {
                             <motion.div
                                 key={index}
                                 className={`w-2 h-2 rounded-full transition-all duration-300 ${visibleTextIndex >= index
-                                    ? 'bg-accent scale-125'
-                                    : 'bg-white/20 scale-100'
+                                    ? 'bg-black scale-125'
+                                    : 'bg-gray-300 scale-100'
                                     }`}
                                 initial={{ scale: 0 }}
                                 animate={{ scale: visibleTextIndex >= index ? 1.25 : 1 }}
                                 transition={{ delay: index * 0.1 }}
                             />
                         ))}
-                        <div className="text-xs text-white/40 mt-4 font-mono">
+                        <div className="text-xs text-gray-400 mt-4 font-mono">
                             {visibleTextIndex + 1} / {features.length}
                         </div>
                     </motion.div>
@@ -203,21 +189,21 @@ const AboutPage = () => {
                         <motion.div
                             animate={{ opacity: [0.5, 1, 0.5] }}
                             transition={{ duration: 2, repeat: Infinity }}
-                            className="text-accent"
+                            className="text-black font-bold"
                         >
                             Scanning
                         </motion.div>
                         <motion.div
                             animate={{ opacity: [0.5, 1, 0.5] }}
                             transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
-                            className="text-white/60 text-xs mt-1"
+                            className="text-gray-500 text-xs mt-1"
                         >
                             Topology Analysis
                         </motion.div>
                         <motion.div
                             animate={{ opacity: [0.5, 1, 0.5] }}
                             transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
-                            className="text-white/40 text-xs mt-1"
+                            className="text-gray-400 text-xs mt-1"
                         >
                             Generating data...
                         </motion.div>
@@ -229,16 +215,16 @@ const AboutPage = () => {
                         animate={{ y: [0, 10, 0] }}
                         transition={{ duration: 2, repeat: Infinity }}
                     >
-                        <div className="w-6 h-10 rounded-full border-2 border-accent/30 flex justify-center pt-2">
-                            <div className="w-1.5 h-3 bg-accent/50 rounded-full" />
+                        <div className="w-6 h-10 rounded-full border-2 border-black/30 flex justify-center pt-2">
+                            <div className="w-1.5 h-3 bg-black/50 rounded-full" />
                         </div>
-                        <p className="text-xs text-white/50 mt-2 text-center">Scroll</p>
+                        <p className="text-xs text-gray-400 mt-2 text-center">Scroll</p>
                     </motion.div>
                 </motion.section>
 
                 {/* Features Section */}
-                <section ref={featuresRef} className="relative py-24">
-                    <SectionDivider direction="top" />
+                <section ref={featuresRef} className="relative py-24 bg-white">
+                    <SectionDivider direction="top" color="#FFFFFF" />
                     <div className="container mx-auto px-6 max-w-6xl relative z-10">
                         <div className="space-y-32 sm:space-y-40">
                             {features.map((feature, index) => (
@@ -250,20 +236,20 @@ const AboutPage = () => {
                                     <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
                                         <div className={`${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                                             <div className="flex items-center gap-4 mb-4">
-                                                <span className="text-6xl sm:text-7xl font-light text-accent/30">
+                                                <span className="text-6xl sm:text-7xl font-light text-gray-200">
                                                     {feature.number}
                                                 </span>
-                                                <div className="h-px flex-1 bg-gradient-to-r from-accent/30 to-transparent" />
+                                                <div className="h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent" />
                                             </div>
-                                            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-light mb-2 tracking-tight">
+                                            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-light mb-2 tracking-tight text-black">
                                                 {feature.title}
                                             </h3>
-                                            <h4 className="text-2xl sm:text-3xl lg:text-4xl font-light mb-6 text-gray-400 tracking-tight">
+                                            <h4 className="text-2xl sm:text-3xl lg:text-4xl font-light mb-6 text-gray-500 tracking-tight">
                                                 {feature.subtitle}
                                             </h4>
                                         </div>
                                         <div className={`${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                                            <p className="text-lg sm:text-xl text-gray-300 leading-relaxed">
+                                            <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
                                                 {feature.description}
                                             </p>
                                         </div>
@@ -275,19 +261,19 @@ const AboutPage = () => {
                 </section>
 
                 {/* Closing Section */}
-                <section className="relative py-24">
-                    <SectionDivider direction="top" color="rgba(8, 28, 21, 0.3)" />
+                <section className="relative py-24 bg-gray-50">
+                    <SectionDivider direction="top" color="#FFFFFF" />
                     <div className="container mx-auto px-6 max-w-4xl relative z-10 text-center">
                         <SectionTransition type="fadeUp">
                             <div className="space-y-6">
-                                <p className="text-xl sm:text-2xl text-gray-300 leading-relaxed">
+                                <p className="text-xl sm:text-2xl text-gray-700 leading-relaxed">
                                     Featuring cutting-edge technology, we harness the power of modern frameworks and tools to translate your vision into high-performance digital solutions.
                                 </p>
-                                <p className="text-lg sm:text-xl text-gray-400 leading-relaxed">
+                                <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
                                     Feel free to reach out if you have a project at{' '}
                                     <a
                                         href="mailto:hello@catalystdigital.com"
-                                        className="text-accent hover:text-accent-light transition-colors underline"
+                                        className="text-black font-bold hover:text-gray-700 transition-colors underline decoration-2 underline-offset-4"
                                     >
                                         hello@catalystdigital.com
                                     </a>
@@ -296,11 +282,10 @@ const AboutPage = () => {
                         </SectionTransition>
                     </div>
                 </section>
-
-                <Footer />
             </div>
-        </Parallax3DLayer>
+        </PageLayout>
     );
 };
 
 export default AboutPage;
+

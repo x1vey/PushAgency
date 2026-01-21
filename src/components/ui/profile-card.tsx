@@ -63,7 +63,7 @@ export default function ProfileCard({
             <motion.div
                 className={cn(
                     "relative z-0 flex items-center overflow-hidden",
-                    "bg-white/10 text-zinc-50 backdrop-blur-md border border-white/20"
+                    "bg-white text-black border-2 border-black"
                 )}
                 style={{ cursor: "pointer" }}
                 layout
@@ -76,41 +76,30 @@ export default function ProfileCard({
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
-                <div className="absolute inset-0 z-20 rounded-[40px] border border-white/20 pointer-events-none" />
-
-                <div
-                    className={cn(
-                        "absolute inset-0 transition-opacity duration-500 z-0",
-                        "bg-gradient-to-br from-primary/20 via-accent/10 to-transparent",
-                        isHovered ? "opacity-100" : "opacity-0"
-                    )}
-                />
+                {/* No background glow */}
 
                 <motion.div
                     layout="position"
                     className="relative z-30 h-10 w-10 shrink-0 m-2"
                 >
+                    {/* Simplified focus ring */}
                     <motion.div
-                        className="absolute inset-0 rounded-full blur-xl bg-primary"
+                        className="absolute inset-0 rounded-full bg-black/5"
                         animate={{
-                            scale: isHovered ? 1.6 : 0.8,
-                            opacity: isHovered ? 0.5 : 0,
-                        }}
-                        transition={{
-                            scale: { duration: 0.4, ease: "easeOut" },
-                            opacity: { duration: 0.4 },
+                            scale: isHovered ? 1.2 : 0.8,
+                            opacity: isHovered ? 1 : 0,
                         }}
                     />
 
                     {useIcon ? (
-                        <div className="relative h-full w-full rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                            <Zap className="w-5 h-5 text-white" fill="currentColor" />
+                        <div className="relative h-full w-full rounded-full bg-black flex items-center justify-center group-hover:scale-90 transition-transform">
+                            <Zap className="w-5 h-5 text-white" fill="none" strokeWidth={2.5} />
                         </div>
                     ) : (
                         <motion.img
                             src={imageSrc}
                             alt={name}
-                            className="relative h-full w-full rounded-full object-cover border-2 border-white/30"
+                            className="relative h-full w-full rounded-full object-cover border border-black/10"
                             animate={{ scale: isHovered ? 1 : 0.96 }}
                             transition={fluidTransition}
                         />
@@ -120,7 +109,7 @@ export default function ProfileCard({
                         initial={{ scale: 0 }}
                         animate={{ scale: isHovered ? 1 : 0 }}
                         transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                        className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-emerald-500 border-2 border-dark z-40"
+                        className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-black border-2 border-white z-40"
                     />
                 </motion.div>
 
@@ -137,7 +126,7 @@ export default function ProfileCard({
                                 <div className="flex items-center justify-between gap-4 mb-0.5">
                                     <motion.h3
                                         variants={elegantItemVariants}
-                                        className="text-sm font-bold text-zinc-50 tracking-tight whitespace-nowrap"
+                                        className="text-sm font-bold text-black tracking-tight whitespace-nowrap"
                                     >
                                         {name}
                                     </motion.h3>
@@ -148,7 +137,7 @@ export default function ProfileCard({
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             variants={elegantItemVariants}
-                                            className="flex items-center justify-center h-6 w-6 rounded-full bg-white/10 text-white hover:bg-white hover:text-black transition-colors"
+                                            className="flex items-center justify-center h-6 w-6 rounded-full bg-gray-100 text-black hover:bg-black hover:text-white transition-colors"
                                         >
                                             <Github size={14} />
                                         </motion.a>
@@ -160,7 +149,7 @@ export default function ProfileCard({
                                         variants={elegantItemVariants}
                                         className="flex items-center gap-2 whitespace-nowrap"
                                     >
-                                        <span className="text-[10px] font-medium text-zinc-400 uppercase tracking-wider">
+                                        <span className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">
                                             {role}
                                         </span>
                                     </motion.div>

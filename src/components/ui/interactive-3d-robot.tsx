@@ -38,6 +38,7 @@ export function InteractiveRobotSpline({ scene, className }: InteractiveRobotSpl
             style={{
               width: '100%',
               height: 'calc(100% + 50px)', // Match the extended height
+              filter: 'brightness(1.3) contrast(1.1) saturate(1.2)', // Lighter, more vibrant robot
             }}
           />
         </div>

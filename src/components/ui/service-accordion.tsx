@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { HandDrawnCircle, HandDrawnUnderline } from './hand-drawn-annotations';
 
 // --- Data for the image accordion - Our Process steps ---
 const accordionItems = [
@@ -46,31 +47,28 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ item, isActive, onMouseEn
     return (
         <div
             className={`
-        relative h-[400px] md:h-[450px] rounded-2xl overflow-hidden cursor-pointer
-        transition-all duration-700 ease-in-out border border-accent/20
-        ${isActive ? 'w-[300px] md:w-[400px]' : 'w-[50px] md:w-[60px]'}
+        relative h-[400px] md:h-[450px] overflow-hidden cursor-pointer
+        transition-all duration-700 ease-in-out border-2 border-transparent
+        ${isActive ? 'w-[300px] md:w-[400px] border-black' : 'w-[50px] md:w-[60px] border-gray-200'}
       `}
             onMouseEnter={onMouseEnter}
         >
-            {/* Background Image */}
-            <img
-                src={item.imageUrl}
-                alt={item.title}
-                className="absolute inset-0 w-full h-full object-cover"
-                onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.onerror = null;
-                    target.src = 'https://placehold.co/400x450/1a1a1a/52b788?text=Image';
-                }}
-            />
+            {/* Background Image - Grayscale on inactive, color on active */}
+            <div className={`absolute inset-0 transition-all duration-700 ${isActive ? 'grayscale-0' : 'grayscale'}`}>
+                <img
+                    src={item.imageUrl}
+                    alt={item.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.onerror = null;
+                        target.src = 'https://placehold.co/400x450/1a1a1a/52b788?text=Image';
+                    }}
+                />
+            </div>
 
-            {/* Dark gradient overlay with nature-tech tint */}
-            <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/60 to-transparent" />
-
-            {/* Green glow effect on active */}
-            {isActive && (
-                <div className="absolute inset-0 bg-gradient-to-t from-accent/20 via-transparent to-transparent" />
-            )}
+            {/* Gradient overlay for text readability */}
+            <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-60'}`} />
 
             {/* Caption Text */}
             <div
@@ -83,8 +81,15 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ item, isActive, onMouseEn
                     }
         `}
             >
-                <span className={`font-bold ${isActive ? 'text-xl md:text-2xl' : 'text-sm md:text-base'}`}>
+                <span className={`font-bold relative inline-block ${isActive ? 'text-xl md:text-2xl' : 'text-sm md:text-base'}`}>
                     {item.title}
+                    {isActive && (
+                        <HandDrawnUnderline
+                            className="bottom-0 left-0 right-0 h-2 text-white opacity-80"
+                            delay={0.2}
+                            duration={0.8}
+                        />
+                    )}
                 </span>
                 {isActive && (
                     <p className="text-gray-300 text-sm mt-1 animate-fadeIn">
@@ -93,9 +98,9 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ item, isActive, onMouseEn
                 )}
             </div>
 
-            {/* Active indicator line */}
+            {/* Active indicator line - White */}
             {isActive && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-accent via-accent-light to-accent" />
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-white" />
             )}
         </div>
     );
@@ -120,36 +125,43 @@ export function ServiceAccordion({
     };
 
     return (
-        <div className="bg-dark font-sans">
+        <div className="bg-white font-sans text-black">
             <section className="container mx-auto px-4 py-12 md:py-24">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
 
                     {/* Left Side: Text Content */}
                     <div className="w-full lg:w-2/5 text-center lg:text-left">
-                        <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight tracking-tight">
+                        <h2 className="text-5xl md:text-7xl font-black text-black leading-tight tracking-tight">
                             {title.split(' ').map((word, i) => (
                                 <span key={i}>
                                     {i === title.split(' ').length - 1 ? (
-                                        <span className="text-gradient-nature">{word}</span>
+                                        <span className="relative inline-block">
+                                            <span className="text-black">{word}</span>
+                                            <HandDrawnCircle
+                                                className="-inset-4 text-black opacity-75"
+                                                delay={0.3}
+                                                duration={1.8}
+                                            />
+                                        </span>
                                     ) : (
                                         word + ' '
                                     )}
                                 </span>
                             ))}
                         </h2>
-                        <p className="mt-6 text-lg text-gray-400 max-w-xl mx-auto lg:mx-0">
+                        <p className="mt-6 text-lg text-gray-600 max-w-xl mx-auto lg:mx-0">
                             {subtitle}
                         </p>
                         <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                             <a
                                 href="/services"
-                                className="inline-block bg-accent text-dark font-semibold px-8 py-3 rounded-xl shadow-lg hover:bg-accent/80 transition-all duration-300 hover:shadow-[0_0_30px_rgba(82,183,136,0.4)] hover:-translate-y-1"
+                                className="inline-block bg-black text-white font-semibold px-8 py-3 rounded-full shadow-lg hover:bg-gray-800 transition-all duration-300 hover:-translate-y-1"
                             >
                                 Explore Services
                             </a>
                             <a
                                 href="/contact"
-                                className="inline-block glass text-white font-semibold px-8 py-3 rounded-xl hover:bg-white/10 transition-all duration-300"
+                                className="inline-block bg-white text-black border-2 border-black font-semibold px-8 py-3 rounded-full hover:bg-black hover:text-white transition-all duration-300"
                             >
                                 Get in Touch
                             </a>

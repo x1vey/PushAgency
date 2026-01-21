@@ -2,8 +2,7 @@ import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MessageSquare, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import { PageLayout } from '@/components/page-layout';
 import { SectionBackground } from '@/components/three';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -14,9 +13,7 @@ const ContactPage = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-dark font-sans text-white overflow-x-hidden">
-            <Navbar />
-
+        <PageLayout>
             {/* Full-screen Contact with Three.js Background */}
             <section className="relative min-h-screen flex items-center overflow-hidden">
                 <SectionBackground particleCount={100} />
@@ -105,10 +102,9 @@ const ContactPage = () => {
                     </div>
                 </div>
             </section>
-
-            <Footer />
-        </div>
+        </PageLayout>
     );
 };
 
 export default ContactPage;
+

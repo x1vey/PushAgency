@@ -6,13 +6,13 @@ import { MeshTransmissionMaterial, Environment, Float } from '@react-three/drei'
 import * as THREE from 'three'
 import { FloatingParticles } from './floating-particles'
 
-// Modern SaaS color scheme
+// Modern SaaS color scheme - Aligned with Design System
 const COLORS = {
-    primary: '#0EA5E9', // Vibrant Teal
-    secondary: '#0284C7', // Darker teal
-    accent: '#38BDF8', // Light teal
-    glow: '#0EA5E9', // Glow color
-    core: '#22D3EE', // Bright cyan core
+    primary: '#111111', // Deep Black/Gray for main structure
+    secondary: '#4B5563', // Gray 600 for details
+    accent: '#000000', // Pure Black for accents
+    glow: '#E5E7EB', // Lighter glow for visibility against white
+    core: '#FFFFFF', // White core
 }
 
 // Main geometric object that responds to mouse
@@ -75,9 +75,9 @@ function GlowingGeometry({ scrollProgress = 0 }: { scrollProgress?: number }) {
                         iridescence={1}
                         iridescenceIOR={1}
                         iridescenceThicknessRange={[0, 1400]}
-                        transmission={0.95}
-                        roughness={0.1}
-                        color={COLORS.primary}
+                        transmission={0.6} // Reduced from 0.95 to be more visible
+                        roughness={0.2}
+                        color={COLORS.secondary} // Use secondary gray for the glass so it's visible against white
                     />
                 </mesh>
 

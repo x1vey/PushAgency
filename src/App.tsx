@@ -4,6 +4,7 @@ import ServicesPage from '@/pages/ServicesPage';
 import PricingPage from '@/pages/PricingPage';
 import AboutPage from '@/pages/AboutPage';
 import ContactPage from '@/pages/ContactPage';
+import BookingPage from '@/pages/BookingPage';
 import NotificationsPage from '@/pages/dashboard/NotificationsPage';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/booking" element={<BookingPage />} />
             <Route path="/dashboard/notifications" element={<NotificationsPage />} />
         </Routes>
     );

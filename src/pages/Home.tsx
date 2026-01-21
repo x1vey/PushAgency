@@ -4,13 +4,16 @@ import { ArrowRight, Rocket, Monitor, BarChart2, Zap, Users, Shield } from 'luci
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
+import { PageLayout } from '@/components/page-layout'
 import { HeroScene, Parallax3DLayer } from '@/components/three'
 import { Spotlight } from '@/components/ui/spotlight'
 import { Card, CardContent } from '@/components/ui/card'
 import MultiOrbitSemiCircle from '@/components/ui/multi-orbit-semi-circle'
 import { SectionTransition, StaggerContainer, StaggerItem, SectionDivider } from '@/components/ui/section-transition'
+import { PricingSectionWithRobot } from '@/components/ui/pricing-section-with-robot';
+import { Button } from '@/components/ui/button';
+import { Hero } from '@/components/ui/animated-hero';
+import { GlowingCard } from '@/components/ui/glowing-card';
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -115,15 +118,14 @@ const Home = () => {
     }, [])
 
     return (
-        <Parallax3DLayer className="min-h-screen bg-dark font-sans text-white overflow-x-hidden">
-            <Navbar />
-
+        <PageLayout>
             {/* Hero Section - Pinned with scroll-controlled animations */}
             <section
                 ref={heroContainerRef}
-                className="relative h-screen flex items-center overflow-hidden"
+                className="relative h-screen flex items-center overflow-hidden bg-white"
             >
-                <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#0EA5E9" />
+                {/* Spotlight - Gray/Black */}
+                <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#333333" />
 
                 {/* Three.js Background */}
                 <div
@@ -134,48 +136,11 @@ const Home = () => {
                         className="w-full h-full"
                         scrollProgress={scrollProgress}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/30 to-dark pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/50 to-white pointer-events-none" />
                 </div>
 
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20 sm:pt-32">
-                    <div className="max-w-3xl">
-                        <div
-                            ref={badgeRef}
-                            className="inline-block px-3 sm:px-4 py-1.5 mb-4 sm:mb-6 rounded-full glass text-accent font-medium text-xs sm:text-sm border-accent/30 will-change-transform"
-                        >
-                            🚀 Tech Solutions for Coaches & Consultants
-                        </div>
-
-                        <div ref={titleRef} className="will-change-transform">
-                            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold leading-tight mb-4 sm:mb-6">
-                                Scale Your Business with{' '}
-                                <span className="text-gradient">Cutting-Edge Tech</span>
-                            </h1>
-                        </div>
-
-                        <p
-                            ref={taglineRef}
-                            className="text-base sm:text-xl text-gray-400 mb-6 sm:mb-10 max-w-xl leading-relaxed will-change-transform"
-                        >
-                            We build custom automation, websites, and systems that free you to focus on what matters—transforming lives.
-                        </p>
-
-                        <div ref={ctaRef} className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 will-change-transform">
-                            <Link
-                                to="/pricing"
-                                className="group px-6 sm:px-8 py-3 sm:py-4 bg-primary rounded-xl text-dark font-bold text-base sm:text-lg shadow-[0_0_20px_rgba(249,115,22,0.4)] hover:shadow-[0_0_35px_rgba(249,115,22,0.6)] transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
-                            >
-                                View Pricing
-                                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                            </Link>
-                            <Link
-                                to="/services"
-                                className="px-6 sm:px-8 py-3 sm:py-4 glass text-white font-bold text-base sm:text-lg rounded-xl hover:bg-white/10 transition-all transform hover:-translate-y-1 text-center"
-                            >
-                                Explore Services
-                            </Link>
-                        </div>
-                    </div>
+                    <Hero />
                 </div>
 
                 {/* Scroll indicator */}
@@ -184,49 +149,44 @@ const Home = () => {
                     animate={{ y: [0, 10, 0] }}
                     transition={{ duration: 2, repeat: Infinity }}
                 >
-                    <div className="w-6 h-10 rounded-full border-2 border-accent/30 flex justify-center pt-2">
-                        <div className="w-1.5 h-3 bg-accent/50 rounded-full" />
+                    <div className="w-6 h-10 rounded-full border-2 border-black/30 flex justify-center pt-2">
+                        <div className="w-1.5 h-3 bg-black/50 rounded-full" />
                     </div>
-                    <p className="text-xs text-white/50 mt-2 text-center">Scroll</p>
+                    <p className="text-xs text-gray-500 mt-2 text-center">Scroll</p>
                 </motion.div>
             </section>
 
             {/* Deliverables Section */}
-            <section className="py-16 sm:py-24 relative">
-                <SectionDivider direction="top" />
+            <section className="py-16 sm:py-24 relative bg-gray-50">
+                <SectionDivider direction="top" color="#FFFFFF" />
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <SectionTransition type="fadeUp" className="text-center mb-12 sm:mb-16">
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">What We Deliver</h2>
-                        <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto">
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-black">What We Deliver</h2>
+                        <p className="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto">
                             End-to-end tech solutions designed for the unique needs of coaches and consultants.
                         </p>
                     </SectionTransition>
 
-                    <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {deliverables.map((item, index) => (
-                            <StaggerItem key={index}>
-                                <Card className="bg-surface/50 border-accent/10 hover:border-accent/30 transition-all duration-300 h-full group hover:bg-surface/80 backdrop-blur-sm">
-                                    <CardContent className="p-4 sm:p-6">
-                                        <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-xl bg-accent/20 text-accent flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 group-hover:bg-accent/30 transition-all duration-300">
-                                            <item.icon size={20} className="sm:w-6 sm:h-6" />
-                                        </div>
-                                        <h3 className="text-lg sm:text-xl font-bold mb-2 text-white">{item.title}</h3>
-                                        <p className="text-sm sm:text-base text-gray-400">{item.desc}</p>
-                                    </CardContent>
-                                </Card>
-                            </StaggerItem>
+                            <GlowingCard
+                                key={index}
+                                title={item.title}
+                                description={item.desc}
+                                icon={<item.icon size={20} className="text-black" />}
+                            />
                         ))}
-                    </StaggerContainer>
+                    </div>
                 </div>
             </section>
 
             {/* Transformation Section */}
-            <section className="py-16 sm:py-24 relative bg-gradient-to-b from-dark to-dark-blue/30">
-                <SectionDivider direction="both" color="rgba(15, 23, 42, 0.5)" />
+            <section className="py-16 sm:py-24 relative bg-white">
+                <SectionDivider direction="both" color="#f9fafb" />
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <SectionTransition type="fadeUp" className="text-center mb-12 sm:mb-16">
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">The Transformation</h2>
-                        <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto">
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-black">The Transformation</h2>
+                        <p className="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto">
                             Real results for coaches and consultants who partnered with us.
                         </p>
                     </SectionTransition>
@@ -234,11 +194,11 @@ const Home = () => {
                     <StaggerContainer className="grid sm:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">
                         {stats.map((stat, index) => (
                             <StaggerItem key={index} type="scaleUp">
-                                <div className="text-center p-6 sm:p-8 glass rounded-2xl hover:scale-105 transition-transform duration-300">
-                                    <div className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gradient-nature mb-2">
+                                <div className="text-center p-6 sm:p-8 bg-gray-50 rounded-none border border-gray-100 hover:border-black transition-all duration-300">
+                                    <div className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-black mb-2">
                                         {stat.value}
                                     </div>
-                                    <div className="text-gray-400 font-medium uppercase tracking-wider text-xs sm:text-sm">
+                                    <div className="text-gray-500 font-medium uppercase tracking-wider text-xs sm:text-sm">
                                         {stat.label}
                                     </div>
                                 </div>
@@ -248,25 +208,27 @@ const Home = () => {
 
                     <SectionTransition type="fadeUp" delay={0.3} className="text-center mt-12 sm:mt-16">
                         <Link
-                            to="/contact"
-                            className="inline-flex items-center gap-2 sm:gap-3 px-8 sm:px-10 py-4 sm:py-5 bg-primary text-dark font-bold text-lg sm:text-xl rounded-xl hover:bg-primary/90 transition-all transform hover:-translate-y-1 shadow-lg glow-amber"
+                            to="/booking"
                         >
-                            Start Your Transformation
-                            <ArrowRight className="w-5 sm:w-6 h-5 sm:h-6" />
+                            <Button variant="premium" className="px-10 py-8 text-xl h-auto rounded-none">
+                                Start Your Transformation <ArrowRight className="ml-2 w-6 h-6" />
+                            </Button>
                         </Link>
                     </SectionTransition>
                 </div>
             </section>
 
+            {/* Pricing Section (Old) */}
+            <PricingSectionWithRobot />
+
             {/* Integrations Section with Multi-Orbit */}
-            <section className="py-16 sm:py-24 relative">
-                <SectionDivider direction="top" color="rgba(15, 23, 42, 0.3)" />
+            <section className="py-16 sm:py-24 relative bg-gray-50">
+                <SectionDivider direction="top" color="#FFFFFF" />
                 <MultiOrbitSemiCircle />
             </section>
-
-            <Footer />
-        </Parallax3DLayer>
+        </PageLayout>
     )
 }
 
 export default Home
+

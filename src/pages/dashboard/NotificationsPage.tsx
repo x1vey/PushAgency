@@ -99,17 +99,17 @@ const mockStats: NotificationStats = {
 // Status badge component
 const StatusBadge = ({ status }: { status: Notification['status'] }) => {
     const configs = {
-        sent: { icon: CheckCircle2, label: 'Sent', className: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' },
-        scheduled: { icon: Clock, label: 'Scheduled', className: 'bg-amber-500/20 text-amber-400 border-amber-500/30' },
-        draft: { icon: Sparkles, label: 'Draft', className: 'bg-blue-500/20 text-blue-400 border-blue-500/30' },
-        failed: { icon: XCircle, label: 'Failed', className: 'bg-red-500/20 text-red-400 border-red-500/30' }
+        sent: { icon: CheckCircle2, label: 'Sent', className: 'bg-emerald-100 text-emerald-700 border-emerald-200' },
+        scheduled: { icon: Clock, label: 'Scheduled', className: 'bg-amber-100 text-amber-700 border-amber-200' },
+        draft: { icon: Sparkles, label: 'Draft', className: 'bg-blue-100 text-blue-700 border-blue-200' },
+        failed: { icon: XCircle, label: 'Failed', className: 'bg-red-100 text-red-700 border-red-200' }
     }
 
     const config = configs[status]
     const Icon = config.icon
 
     return (
-        <Badge className={`${config.className} border flex items-center gap-1.5 px-2.5 py-1`}>
+        <Badge className={`${config.className} border flex items-center gap-1.5 px-2.5 py-1 rounded-full shadow-none`}>
             <Icon className="w-3 h-3" />
             {config.label}
         </Badge>
@@ -137,25 +137,25 @@ const StatCard = ({
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.5, delay }}
     >
-        <Card className="bg-white/5 border-white/10 hover:border-primary/50 transition-all duration-300 group hover:bg-white/10 overflow-hidden relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <Card className="bg-white border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 group hover:border-black/5 overflow-hidden relative rounded-3xl">
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <CardContent className="p-5 relative">
                 <div className="flex items-start justify-between">
-                    <div className="w-10 h-10 rounded-xl bg-primary/20 text-primary flex items-center justify-center group-hover:scale-110 group-hover:bg-primary/30 transition-all duration-300">
+                    <div className="w-10 h-10 rounded-full bg-black/5 text-black flex items-center justify-center group-hover:scale-110 group-hover:bg-black/10 transition-all duration-300">
                         <Icon className="w-5 h-5" />
                     </div>
                     {trend !== undefined && (
-                        <div className={`flex items-center gap-1 text-xs font-medium ${trend >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                        <div className={`flex items-center gap-1 text-xs font-medium ${trend >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
                             <TrendingUp className={`w-3 h-3 ${trend < 0 ? 'rotate-180' : ''}`} />
                             {Math.abs(trend)}%
                         </div>
                     )}
                 </div>
                 <div className="mt-4">
-                    <p className="text-2xl font-bold text-white">
+                    <p className="text-2xl font-bold text-black">
                         {typeof value === 'number' ? value.toLocaleString() : value}{suffix}
                     </p>
-                    <p className="text-sm text-gray-400 mt-1">{label}</p>
+                    <p className="text-sm text-gray-500 mt-1">{label}</p>
                 </div>
             </CardContent>
         </Card>
@@ -199,24 +199,24 @@ const NotificationItem = ({
             whileHover={{ scale: 1.01 }}
             className="group"
         >
-            <Card className="bg-white/5 border-white/10 hover:border-primary/40 transition-all duration-300 hover:bg-white/[0.07] cursor-pointer overflow-hidden">
+            <Card className="bg-white border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:bg-gray-50/50 cursor-pointer overflow-hidden rounded-3xl">
                 <CardContent className="p-4 sm:p-5">
                     <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
                         {/* Icon */}
-                        <div className="hidden sm:flex w-10 h-10 rounded-xl bg-gradient-to-br from-primary/30 to-accent/20 items-center justify-center shrink-0">
-                            <Bell className="w-5 h-5 text-primary" />
+                        <div className="hidden sm:flex w-10 h-10 rounded-full bg-gray-100 items-center justify-center shrink-0">
+                            <Bell className="w-5 h-5 text-gray-600" />
                         </div>
 
                         {/* Content */}
                         <div className="flex-1 min-w-0">
                             <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
-                                <h4 className="font-semibold text-white truncate">{notification.title}</h4>
+                                <h4 className="font-bold text-black truncate">{notification.title}</h4>
                                 <StatusBadge status={notification.status} />
                             </div>
-                            <p className="text-sm text-gray-400 line-clamp-2 mb-3">{notification.message}</p>
+                            <p className="text-sm text-gray-500 line-clamp-2 mb-3">{notification.message}</p>
 
                             {/* Meta info */}
-                            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-gray-500">
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-gray-400">
                                 <span className="flex items-center gap-1.5">
                                     <Users className="w-3.5 h-3.5" />
                                     {notification.audienceCount.toLocaleString()} recipients
@@ -230,14 +230,14 @@ const NotificationItem = ({
                                 )}
 
                                 {notification.status === 'scheduled' && notification.scheduledFor && (
-                                    <span className="flex items-center gap-1.5 text-amber-400">
+                                    <span className="flex items-center gap-1.5 text-amber-600">
                                         <Clock className="w-3.5 h-3.5" />
                                         Scheduled: {formatFutureDate(notification.scheduledFor)}
                                     </span>
                                 )}
 
                                 {notification.openRate !== undefined && (
-                                    <span className="flex items-center gap-1.5 text-emerald-400">
+                                    <span className="flex items-center gap-1.5 text-emerald-600">
                                         <Activity className="w-3.5 h-3.5" />
                                         {notification.openRate}% opened
                                     </span>
@@ -247,11 +247,11 @@ const NotificationItem = ({
 
                         {/* Actions */}
                         <div className="flex items-center gap-2 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                            <Button size="sm" variant="ghost" className="h-8 px-3 text-gray-400 hover:text-white">
+                            <Button size="sm" variant="ghost" className="h-8 px-3 text-gray-500 hover:text-black rounded-full">
                                 View
                             </Button>
                             {notification.status === 'draft' && (
-                                <Button size="sm" className="h-8 px-3 bg-primary hover:bg-primary/90">
+                                <Button size="sm" className="h-8 px-3 bg-black hover:bg-black/80 text-white rounded-full">
                                     <Send className="w-3.5 h-3.5 mr-1.5" />
                                     Send
                                 </Button>
@@ -278,12 +278,12 @@ const SendNotificationCard = ({ onClose }: { onClose?: () => void }) => {
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ duration: 0.3 }}
         >
-            <Card className="bg-gradient-to-br from-primary/10 via-white/5 to-accent/10 border-primary/30 overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
+            <Card className="bg-white border-gray-200 overflow-hidden shadow-xl rounded-3xl">
+                <div className="absolute inset-0 bg-white/50" />
                 <CardHeader className="relative pb-4">
-                    <CardTitle className="flex items-center gap-3 text-xl">
-                        <div className="w-10 h-10 rounded-xl bg-primary/30 flex items-center justify-center">
-                            <Send className="w-5 h-5 text-primary" />
+                    <CardTitle className="flex items-center gap-3 text-xl font-bold text-black">
+                        <div className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center">
+                            <Send className="w-5 h-5 text-black" />
                         </div>
                         Create New Push Notification
                     </CardTitle>
@@ -291,7 +291,7 @@ const SendNotificationCard = ({ onClose }: { onClose?: () => void }) => {
                 <CardContent className="relative space-y-4">
                     {/* Title Input */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
                             Notification Title
                         </label>
                         <input
@@ -299,15 +299,15 @@ const SendNotificationCard = ({ onClose }: { onClose?: () => void }) => {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                             placeholder="Enter a catchy title..."
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
+                            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black transition-all"
                             maxLength={80}
                         />
-                        <p className="text-xs text-gray-500 mt-1.5">{title.length}/80 characters</p>
+                        <p className="text-xs text-gray-400 mt-1.5">{title.length}/80 characters</p>
                     </div>
 
                     {/* Message Input */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
                             Message Body
                         </label>
                         <textarea
@@ -315,10 +315,10 @@ const SendNotificationCard = ({ onClose }: { onClose?: () => void }) => {
                             onChange={(e) => setMessage(e.target.value)}
                             placeholder="Write your notification message..."
                             rows={3}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all resize-none"
+                            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black transition-all resize-none"
                             maxLength={characterLimit}
                         />
-                        <p className={`text-xs mt-1.5 ${message.length > characterLimit * 0.9 ? 'text-amber-400' : 'text-gray-500'}`}>
+                        <p className={`text-xs mt-1.5 ${message.length > characterLimit * 0.9 ? 'text-amber-500' : 'text-gray-400'}`}>
                             {message.length}/{characterLimit} characters
                         </p>
                     </div>
@@ -329,16 +329,16 @@ const SendNotificationCard = ({ onClose }: { onClose?: () => void }) => {
                             onClick={() => setIsScheduled(!isScheduled)}
                             className={`
                                 relative w-12 h-6 rounded-full transition-all duration-300
-                                ${isScheduled ? 'bg-primary' : 'bg-white/10'}
+                                ${isScheduled ? 'bg-black' : 'bg-gray-200'}
                             `}
                         >
                             <motion.div
-                                className="absolute top-1 w-4 h-4 bg-white rounded-full shadow-md"
+                                className="absolute top-1 w-4 h-4 bg-white rounded-full shadow-sm"
                                 animate={{ left: isScheduled ? '28px' : '4px' }}
                                 transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                             />
                         </button>
-                        <span className="text-sm text-gray-300">Schedule for later</span>
+                        <span className="text-sm text-gray-600">Schedule for later</span>
                     </div>
 
                     {/* Schedule Input */}
@@ -352,7 +352,7 @@ const SendNotificationCard = ({ onClose }: { onClose?: () => void }) => {
                             >
                                 <input
                                     type="datetime-local"
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
+                                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-black focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black transition-all"
                                 />
                             </motion.div>
                         )}
@@ -361,7 +361,7 @@ const SendNotificationCard = ({ onClose }: { onClose?: () => void }) => {
                     {/* Actions */}
                     <div className="flex flex-col sm:flex-row gap-3 pt-2">
                         <Button
-                            className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-xl shadow-[0_0_20px_rgba(124,58,237,0.3)] hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] transition-all"
+                            className="flex-1 bg-black hover:bg-black/90 text-white font-semibold py-3 rounded-full shadow-lg hover:shadow-xl transition-all"
                             disabled={!title || !message}
                         >
                             <Send className="w-4 h-4 mr-2" />
@@ -369,7 +369,7 @@ const SendNotificationCard = ({ onClose }: { onClose?: () => void }) => {
                         </Button>
                         <Button
                             variant="outline"
-                            className="flex-1 border-white/20 text-gray-300 hover:bg-white/10 py-3 rounded-xl"
+                            className="flex-1 border-gray-200 text-gray-600 hover:bg-gray-50 py-3 rounded-full"
                             onClick={onClose}
                         >
                             Save as Draft
@@ -417,27 +417,27 @@ const NotificationsPage = () => {
     ]
 
     return (
-        <div className="min-h-screen bg-dark font-sans text-white">
-            <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#F97316" />
+        <div className="min-h-screen bg-white font-sans text-black">
+            <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#E5E7EB" />
 
             {/* Header */}
-            <header className="sticky top-0 z-40 bg-dark/80 backdrop-blur-xl border-b border-white/5">
+            <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-gray-100">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center gap-4">
-                            <Link to="/" className="text-gray-400 hover:text-white transition-colors">
+                            <Link to="/" className="text-gray-400 hover:text-black transition-colors">
                                 <ArrowLeft className="w-5 h-5" />
                             </Link>
                             <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                                    <Bell className="w-4 h-4 text-primary" />
+                                <div className="w-8 h-8 rounded-lg bg-black/5 flex items-center justify-center">
+                                    <Bell className="w-4 h-4 text-black" />
                                 </div>
                                 <h1 className="text-xl font-bold">Push Notifications</h1>
                             </div>
                         </div>
                         <Button
                             onClick={() => setShowCreateForm(!showCreateForm)}
-                            className="bg-primary hover:bg-primary/90 shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:shadow-[0_0_25px_rgba(124,58,237,0.5)] transition-all"
+                            className="bg-black hover:bg-black/90 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
                         >
                             <Plus className="w-4 h-4 mr-2" />
                             New Notification
@@ -496,13 +496,13 @@ const NotificationsPage = () => {
                     <div className="flex flex-col sm:flex-row gap-3">
                         {/* Search */}
                         <div className="relative flex-1">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                             <input
                                 type="text"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 placeholder="Search notifications..."
-                                className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
+                                className="w-full bg-white border border-gray-200 rounded-full pl-11 pr-4 py-2.5 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black transition-all shadow-sm"
                             />
                         </div>
 
@@ -510,11 +510,11 @@ const NotificationsPage = () => {
                         <div className="relative" ref={filterRef}>
                             <button
                                 onClick={() => setShowFilterDropdown(!showFilterDropdown)}
-                                className="flex items-center gap-2 px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-gray-300 hover:bg-white/10 transition-all min-w-[160px] justify-between"
+                                className="flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 rounded-full text-gray-600 hover:bg-gray-50 transition-all min-w-[160px] justify-between shadow-sm"
                             >
                                 <div className="flex items-center gap-2">
                                     <Filter className="w-4 h-4" />
-                                    <span className="text-sm">
+                                    <span className="text-sm font-medium">
                                         {filterOptions.find(o => o.value === statusFilter)?.label}
                                     </span>
                                 </div>
@@ -527,7 +527,7 @@ const NotificationsPage = () => {
                                         initial={{ opacity: 0, y: -10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -10 }}
-                                        className="absolute top-full right-0 mt-2 w-48 bg-dark-light/95 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-xl z-50"
+                                        className="absolute top-full right-0 mt-2 w-48 bg-white/95 backdrop-blur-xl border border-gray-100 rounded-2xl overflow-hidden shadow-xl z-50"
                                     >
                                         {filterOptions.map((option) => (
                                             <button
@@ -537,8 +537,8 @@ const NotificationsPage = () => {
                                                     setShowFilterDropdown(false)
                                                 }}
                                                 className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${statusFilter === option.value
-                                                    ? 'bg-primary/20 text-primary'
-                                                    : 'text-gray-300 hover:bg-white/5'
+                                                    ? 'bg-black/5 text-black font-medium'
+                                                    : 'text-gray-600 hover:bg-gray-50'
                                                     }`}
                                             >
                                                 {option.label}
@@ -566,10 +566,10 @@ const NotificationsPage = () => {
                                 animate={{ opacity: 1 }}
                                 className="text-center py-12"
                             >
-                                <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
-                                    <Bell className="w-8 h-8 text-gray-500" />
+                                <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center mx-auto mb-4">
+                                    <Bell className="w-8 h-8 text-gray-400" />
                                 </div>
-                                <h3 className="text-lg font-medium text-gray-300 mb-2">No notifications found</h3>
+                                <h3 className="text-lg font-bold text-black mb-2">No notifications found</h3>
                                 <p className="text-gray-500">
                                     {searchQuery || statusFilter !== 'all'
                                         ? 'Try adjusting your search or filters'

@@ -59,15 +59,13 @@ function SemiCircleOrbit({ radius, centerX, centerY, count, iconSize }: any) {
 
             {/* Tooltip */}
             <div
-              className={`absolute ${
-                tooltipAbove ? "bottom-[calc(100%+8px)]" : "top-[calc(100%+8px)]"
-              } hidden group-hover:block w-28 rounded-lg bg-black px-2 py-1 text-xs text-white shadow-lg text-center`}
+              className={`absolute ${tooltipAbove ? "bottom-[calc(100%+8px)]" : "top-[calc(100%+8px)]"
+                } hidden group-hover:block w-28 rounded-lg bg-black px-2 py-1 text-xs text-white shadow-lg text-center`}
             >
               App {index + 1}
               <div
-                className={`absolute left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 bg-black ${
-                  tooltipAbove ? "top-full" : "bottom-full"
-                }`}
+                className={`absolute left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 bg-black ${tooltipAbove ? "top-full" : "bottom-full"
+                  }`}
               ></div>
             </div>
           </div>
@@ -95,11 +93,11 @@ export default function MultiOrbitSemiCircle() {
     size.width < 480
       ? Math.max(24, baseWidth * 0.05)
       : size.width < 768
-      ? Math.max(28, baseWidth * 0.06)
-      : Math.max(32, baseWidth * 0.07);
+        ? Math.max(28, baseWidth * 0.06)
+        : Math.max(32, baseWidth * 0.07);
 
   return (
-    <section className="py-12 sm:py-24 relative min-h-[80vh] w-full overflow-hidden bg-dark">
+    <section className="py-12 sm:py-24 relative min-h-[80vh] w-full overflow-hidden bg-white">
       <div className="relative flex flex-col items-center text-center z-10">
         <h1 className="my-6 text-4xl font-bold lg:text-7xl text-white">Integrations</h1>
         <p className="mb-12 max-w-2xl text-gray-400 lg:text-xl px-4">

@@ -1,35 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Syne:wght@400;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Modern SaaS color system - Deep blues with teal accents */
-    --background: 222 47% 8%;
+    /* Midnight Violet Editorial Theme */
+    --background: 224 71% 4%;
+    /* #030712 Rich Black */
     --foreground: 210 40% 98%;
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 24 95% 53%;
-    --primary-foreground: 0 0% 5%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 20%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 199 89% 48%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 95%;
-    --border: 217 33% 25%;
-    --input: 217 33% 17%;
-    --ring: 199 89% 48%;
-    --radius: 0.75rem;
+    /* #F8FAFC Slate 50 */
 
-    /* Modern SaaS specific */
-    --ocean-glow: 199 89% 48%;
-    --ocean-deep: 222 47% 8%;
-    --scan-line: 199 89% 48%;
+    --card: 224 71% 6%;
+    /* #0B101E Slightly lighter black */
+    --card-foreground: 210 40% 98%;
+
+    --popover: 224 71% 6%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 262 83% 58%;
+    /* #7C3AED Electric Violet */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 330 81% 60%;
+    /* #DB2777 Deep Pink */
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 15%;
+    --muted-foreground: 215 20% 70%;
+
+    --accent: 330 81% 60%;
+    /* Pink Accent */
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 262 83% 58%;
+    /* matches primary */
+
+    --radius: 0.5rem;
+    /* Standard clean radius */
   }
 
   html {
@@ -37,8 +51,7 @@
   }
 
   body {
-    @apply bg-dark text-white antialiased font-sans;
-    background: #0A0F1C;
+    @apply bg-background text-foreground antialiased font-sans;
   }
 
   /* Custom scrollbar with modern SaaS theme */
@@ -62,38 +75,20 @@
 
 @layer utilities {
 
-  /* Glass morphism - modern SaaS deep blue tinted */
+  /* Glass morphism - Clean White */
   .glass {
-    @apply backdrop-blur-xl border border-white/10;
-    background: linear-gradient(135deg,
-        rgba(30, 41, 59, 0.4) 0%,
-        rgba(10, 15, 28, 0.6) 100%);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+    @apply backdrop-blur-md border border-gray-200/50 bg-white/70;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   }
 
-  .glass-dark {
-    @apply backdrop-blur-xl border border-accent/10;
-    background: linear-gradient(135deg,
-        rgba(15, 23, 42, 0.9) 0%,
-        rgba(10, 15, 28, 0.8) 100%);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7);
-  }
-
-  /* Text gradients - modern SaaS themed */
   .text-gradient {
-    @apply bg-gradient-to-r from-accent via-accent-bright to-primary bg-clip-text text-transparent;
+    @apply text-foreground;
+    /* Flat Black */
   }
 
   .text-gradient-nature {
-    @apply bg-gradient-to-r from-accent-dark via-accent to-accent-light bg-clip-text text-transparent;
-  }
-
-  .text-gradient-warm {
-    @apply bg-gradient-to-r from-orange-400 via-primary to-primary-light bg-clip-text text-transparent;
-  }
-
-  .text-gradient-cool {
-    @apply bg-gradient-to-r from-accent-dark via-accent to-accent-bright bg-clip-text text-transparent;
+    @apply text-foreground;
+    /* Flat Black */
   }
 
   /* Card styles */
@@ -245,6 +240,47 @@
   100% {
     transform: translateY(100vh);
   }
+}
+
+/* Hand-drawn SVG animations */
+@keyframes draw-circle {
+  0% {
+    stroke-dashoffset: 500;
+  }
+
+  40% {
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dashoffset: 0;
+  }
+
+  90% {
+    stroke-dashoffset: 500;
+  }
+
+  100% {
+    stroke-dashoffset: 500;
+  }
+}
+
+@keyframes draw-underline {
+  from {
+    stroke-dashoffset: 200;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-draw-circle {
+  animation: draw-circle 4s ease-in-out infinite;
+}
+
+.animate-draw-underline {
+  animation: draw-underline 1s ease-out forwards;
 }
 
 /* Smooth transitions for interactive elements */

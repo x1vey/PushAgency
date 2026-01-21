@@ -7,40 +7,62 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Modern SaaS color palette - premium deep blues with teal accents
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: '#F97316', // Warm Coral - primary CTAs
-          dark: '#EA580C',
-          light: '#FB923C',
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
-          DEFAULT: '#0EA5E9', // Vibrant Teal
-          dark: '#0284C7',
-          light: '#38BDF8',
-          bright: '#22D3EE', // Cyan Glow
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
         },
-        ocean: {
-          deep: '#0A0F1C', // Deep Space Blue
-          midnight: '#111827', // Midnight Blue
-          slate: '#1E293B', // Slate Blue
-          steel: '#334155', // Steel Blue
-          mist: '#475569', // Blue Mist
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
         },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        // Crimson Noir Specifics
+        noir: {
+          DEFAULT: '#000000',
+          deep: '#050505',
+          gray: '#1A1A1A',
+        },
+        crimson: {
+          DEFAULT: '#DC143C',
+          glow: '#FF0033',
+        },
+        // Legacy support mapping (mapping old names to new system to prevent breaks)
         dark: {
-          DEFAULT: '#0A0F1C', // Deep Space Blue
-          blue: '#0F172A', // Dark navy tint
-          light: '#111827', // Midnight Blue
-          lighter: '#1E293B', // Slate Blue
-          border: '#334155', // Steel Blue border
+          DEFAULT: '#000000',
+          blue: '#050505',
         },
         surface: {
-          DEFAULT: '#111827', // Card Surface - Midnight Blue
-          light: '#1E293B', // Elevated Surface - Slate Blue
-          glass: 'rgba(14, 165, 233, 0.08)', // Glass surface with teal tint
+          DEFAULT: '#080808',
         }
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
+        heading: ['Syne', 'sans-serif'],
+        fancy: ['Playfair Display', 'serif'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

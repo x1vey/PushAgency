@@ -7,16 +7,17 @@ import * as THREE from 'three'
 import { FloatingParticles } from './floating-particles'
 
 // Modern SaaS color scheme matching new design system
+// Modern SaaS color scheme matching new design system
 const TREE_COLORS = {
-    trunk: '#4A3728', // Rich brown
-    trunkDark: '#2E2218', // Darker brown
-    leaves: '#1E3A5F', // Deep ocean blue
-    leavesLight: '#2563EB', // Medium blue
-    leavesBright: '#0284C7', // Bright teal-blue
-    glow: '#0EA5E9', // Tech glow teal (accent)
-    wireframe: '#38BDF8', // Wireframe color
-    ambient: '#0A0F1C', // Dark blue ambient
-    node: '#22D3EE', // Bright cyan node color
+    trunk: '#334155', // Secondary (Steel Blue)
+    trunkDark: '#1E293B', // Muted/Darker Steel
+    leaves: '#0F172A', // Dark Blue
+    leavesLight: '#0EA5E9', // Accent (Vibrant Teal)
+    leavesBright: '#38BDF8', // Accent Light
+    glow: '#0EA5E9', // Accent (Teal)
+    wireframe: '#22D3EE', // Accent Bright
+    ambient: '#0A0F1C', // Background (Ocean Deep)
+    node: '#F97316', // Primary (Warm Coral) for contrast
 }
 
 // Data nodes that appear on the tree like nature-beyond.tech
@@ -135,7 +136,8 @@ function ScanEffect({ speed = 0.5 }: { speed?: number }) {
         const cycle = (time * speed) % 2
         const y = -3 + cycle * 4
         scanRef.current.position.y = y
-        scanRef.current.material.opacity = 0.4 + Math.sin(time * 4) * 0.2
+        const material = scanRef.current.material as THREE.MeshBasicMaterial
+        material.opacity = 0.4 + Math.sin(time * 4) * 0.2
     })
 
     return (
