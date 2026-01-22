@@ -12,31 +12,55 @@ interface InteractiveRobotSplineProps {
 export function InteractiveRobotSpline({ scene, className }: InteractiveRobotSplineProps) {
   const onLoad = (spline: Application) => {
     const allObjects = spline.getAllObjects();
+    let directionalLightCount = 0;
+    let pointLightCount = 0;
 
     allObjects.forEach((obj: any) => {
-      // Maximum ambient light to kill all shadows
+      // Maximum ambient light for even illumination
       if (obj.type === 'AmbientLight') {
         if (obj.intensity !== undefined) {
-          obj.intensity = 3.0; // Extremely strong ambient light
+          obj.intensity = 4.0; // Very strong ambient light for face visibility
         }
       }
 
-      // Also boost all other lights and reposition them for even coverage
+      // Position directional lights - first one front, second one right side
       if (obj.type === 'DirectionalLight') {
+        directionalLightCount++;
         if (obj.intensity !== undefined) {
-          obj.intensity = 1.2; // Strong directional lights too
+          obj.intensity = 2.5; // Strong light
         }
-        // Position from front to minimize shadows
-        obj.position.set(0, 100, 500);
+
+        if (directionalLightCount === 1) {
+          // First light: directly in front
+          obj.position.set(0, 50, 800);
+        } else {
+          // Second light: from the right side
+          obj.position.set(400, 100, 400);
+        }
+
         if (obj.lookAt) {
           obj.lookAt(0, 0, 0);
         }
       }
 
-      // Boost point lights if they exist
+      // Position point lights - alternate between front-right and right
       if (obj.type === 'PointLight') {
+        pointLightCount++;
         if (obj.intensity !== undefined) {
-          obj.intensity = 2.0;
+          obj.intensity = 3.5;
+        }
+
+        if (obj.position) {
+          if (pointLightCount === 1) {
+            // First point light: front-right
+            obj.position.set(300, 50, 500);
+          } else if (pointLightCount === 2) {
+            // Second point light: right side
+            obj.position.set(500, 0, 200);
+          } else {
+            // Additional lights: push forward
+            obj.position.z = Math.max(obj.position.z, 200);
+          }
         }
       }
     });
@@ -72,7 +96,7 @@ export function InteractiveRobotSpline({ scene, className }: InteractiveRobotSpl
             style={{
               width: '100%',
               height: 'calc(100% + 50px)',
-              filter: 'brightness(1.6) contrast(0.95) saturate(1.2) drop-shadow(0 0 20px rgba(255,255,255,0.3))', // Lower contrast to reduce shadow depth
+              filter: 'brightness(1.8) contrast(0.9) saturate(1.2) drop-shadow(0 0 20px rgba(255,255,255,0.4))',
             }}
           />
         </div>

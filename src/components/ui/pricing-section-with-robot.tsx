@@ -9,12 +9,38 @@ import { InteractiveRobotSpline } from '@/components/ui/interactive-3d-robot';
 import { SectionTransition, SectionDivider } from '@/components/ui/section-transition';
 import { pricingPlans } from '@/config/pricing';
 
+// Custom hook for intersection observer
+function useInView(options?: IntersectionObserverInit) {
+    const ref = useRef<HTMLDivElement>(null);
+    const [isInView, setIsInView] = useState(false);
+
+    useEffect(() => {
+        const element = ref.current;
+        if (!element) return;
+
+        const observer = new IntersectionObserver(([entry]) => {
+            // Once it's in view, keep it loaded (don't unload when scrolling away)
+            if (entry.isIntersecting) {
+                setIsInView(true);
+            }
+        }, { threshold: 0.1, rootMargin: '100px', ...options });
+
+        observer.observe(element);
+        return () => observer.disconnect();
+    }, [options]);
+
+    return { ref, isInView };
+}
+
 
 
 export function PricingSectionWithRobot() {
     const [focusedCard, setFocusedCard] = useState<number | null>(null);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const cardsContainerRef = useRef<HTMLDivElement>(null);
+
+    // Only load robot when section is visible
+    const { ref: robotContainerRef, isInView: shouldLoadRobot } = useInView();
 
     // Track mouse position for robot look direction
     useEffect(() => {
@@ -56,13 +82,19 @@ export function PricingSectionWithRobot() {
 
                 {/* Robot and Cards Layout */}
                 <div className="relative max-w-6xl mx-auto">
-                    {/* Centered Robot */}
-                    <div className="relative h-[300px] sm:h-[350px] mb-8">
+                    {/* Centered Robot - Lazy loaded */}
+                    <div ref={robotContainerRef} className="relative h-[300px] sm:h-[350px] mb-8">
                         <div className="absolute inset-0 flex items-center justify-center">
-                            <InteractiveRobotSpline
-                                scene="https://prod.spline.design/PyzDhpQ9E5f1E3MT/scene.splinecode"
-                                className="w-full h-full max-w-[500px]"
-                            />
+                            {shouldLoadRobot ? (
+                                <InteractiveRobotSpline
+                                    scene="https://prod.spline.design/PyzDhpQ9E5f1E3MT/scene.splinecode"
+                                    className="w-full h-full max-w-[500px]"
+                                />
+                            ) : (
+                                <div className="w-full h-full max-w-[500px] flex items-center justify-center">
+                                    <div className="w-12 h-12 border-4 border-gray-200 border-t-black rounded-full animate-spin"></div>
+                                </div>
+                            )}
                         </div>
 
                         {/* Robot speech bubble */}

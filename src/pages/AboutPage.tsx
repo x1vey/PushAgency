@@ -4,6 +4,8 @@ import { PageLayout } from '@/components/page-layout';
 import { Spotlight } from '@/components/ui/spotlight';
 import { SectionTransition, SectionDivider } from '@/components/ui/section-transition';
 import { DotScreenShader } from '@/components/ui/dot-shader-background';
+import { Testimonials } from '@/components/ui/twitter-testimonial-cards';
+import AnimatedTextCycle from '@/components/ui/animated-text-cycle';
 
 const features = [
     {
@@ -222,6 +224,26 @@ const AboutPage = () => {
                     </motion.div>
                 </motion.section>
 
+                {/* Testimonials Section */}
+                <section className="relative py-24 bg-white">
+                    <SectionDivider direction="top" color="#FFFFFF" />
+                    <div className="container mx-auto px-6 max-w-6xl relative z-10">
+                        <SectionTransition type="fadeUp">
+                            <div className="text-center mb-16">
+                                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light mb-4 tracking-tight text-black">
+                                    What Our Clients Say
+                                </h2>
+                                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                                    Trusted by coaches and consultants worldwide
+                                </p>
+                            </div>
+                        </SectionTransition>
+                        <div className="flex justify-center">
+                            <Testimonials />
+                        </div>
+                    </div>
+                </section>
+
                 {/* Features Section */}
                 <section ref={featuresRef} className="relative py-24 bg-white">
                     <SectionDivider direction="top" color="#FFFFFF" />
@@ -272,11 +294,27 @@ const AboutPage = () => {
                                 <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
                                     Feel free to reach out if you have a project at{' '}
                                     <a
-                                        href="mailto:hello@4thdimension.com"
+                                        href="mailto:hi@hisubhadeep.com"
                                         className="text-black font-bold hover:text-gray-700 transition-colors underline decoration-2 underline-offset-4"
                                     >
-                                        hello@4thdimension.com
+                                        hi@hisubhadeep.com
                                     </a>
+                                </p>
+                                <p className="text-2xl sm:text-3xl text-gray-800 leading-relaxed pt-8">
+                                    Your{' '}
+                                    <AnimatedTextCycle
+                                        words={[
+                                            "business",
+                                            "vision",
+                                            "workflow",
+                                            "success",
+                                            "growth",
+                                            "future"
+                                        ]}
+                                        interval={3000}
+                                        className="text-black font-semibold"
+                                    />{' '}
+                                    deserves better tools.
                                 </p>
                             </div>
                         </SectionTransition>

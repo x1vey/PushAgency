@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MessageSquare, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import AnimatedTextCycle from '@/components/ui/animated-text-cycle';
 import { PageLayout } from '@/components/page-layout';
 import { SectionBackground } from '@/components/three';
 import { Card, CardContent } from '@/components/ui/card';
@@ -100,6 +101,28 @@ const ContactPage = () => {
                             </div>
                         </motion.div>
                     </div>
+                </div>
+            </section>
+
+            {/* Animated Tagline Section */}
+            <section className="py-16 sm:py-20 bg-gray-900 relative">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                    <p className="text-2xl sm:text-3xl lg:text-4xl text-gray-200 leading-relaxed">
+                        Your{' '}
+                        <AnimatedTextCycle
+                            words={[
+                                "business",
+                                "vision",
+                                "workflow",
+                                "success",
+                                "growth",
+                                "future"
+                            ]}
+                            interval={3000}
+                            className="text-white font-semibold"
+                        />{' '}
+                        deserves better tools.
+                    </p>
                 </div>
             </section>
         </PageLayout>

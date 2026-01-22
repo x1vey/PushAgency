@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect, Suspense } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { MeshTransmissionMaterial, Environment, Float } from '@react-three/drei'
+import { MeshTransmissionMaterial, Float } from '@react-three/drei'
 import * as THREE from 'three'
 import { FloatingParticles } from './floating-particles'
 
@@ -19,7 +19,9 @@ const COLORS = {
 function GlowingGeometry({ scrollProgress = 0 }: { scrollProgress?: number }) {
     const meshRef = useRef<THREE.Mesh>(null)
     const innerRef = useRef<THREE.Mesh>(null)
+    const groupRef = useRef<THREE.Group>(null)
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+    const { viewport } = useThree()
 
     useEffect(() => {
         const handleMouseMove = (event: MouseEvent) => {
@@ -32,9 +34,24 @@ function GlowingGeometry({ scrollProgress = 0 }: { scrollProgress?: number }) {
     }, [])
 
     useFrame((state) => {
-        if (!meshRef.current || !innerRef.current) return
+        if (!meshRef.current || !innerRef.current || !groupRef.current) return
 
         const time = state.clock.elapsedTime
+
+        // Move the entire group based on mouse position
+        const targetX = mousePos.x * (viewport.width / 4)
+        const targetY = mousePos.y * (viewport.height / 4)
+
+        groupRef.current.position.x = THREE.MathUtils.lerp(
+            groupRef.current.position.x,
+            targetX,
+            0.08
+        )
+        groupRef.current.position.y = THREE.MathUtils.lerp(
+            groupRef.current.position.y,
+            targetY,
+            0.08
+        )
 
         // Smooth rotation based on mouse position
         meshRef.current.rotation.x = THREE.MathUtils.lerp(
@@ -59,25 +76,25 @@ function GlowingGeometry({ scrollProgress = 0 }: { scrollProgress?: number }) {
 
     return (
         <Float speed={2} rotationIntensity={0.2} floatIntensity={0.5}>
-            <group>
+            <group ref={groupRef}>
                 {/* Outer glass icosahedron */}
                 <mesh ref={meshRef}>
                     <icosahedronGeometry args={[1.5, 1]} />
                     <MeshTransmissionMaterial
                         backside
-                        samples={16}
-                        thickness={0.5}
-                        chromaticAberration={0.5}
-                        anisotropy={0.3}
-                        distortion={0.5}
-                        distortionScale={0.5}
-                        temporalDistortion={0.1}
-                        iridescence={1}
+                        samples={4}
+                        thickness={0.4}
+                        chromaticAberration={0.3}
+                        anisotropy={0.2}
+                        distortion={0.3}
+                        distortionScale={0.3}
+                        temporalDistortion={0.05}
+                        iridescence={0.8}
                         iridescenceIOR={1}
-                        iridescenceThicknessRange={[0, 1400]}
-                        transmission={0.6} // Reduced from 0.95 to be more visible
+                        iridescenceThicknessRange={[0, 1000]}
+                        transmission={0.6}
                         roughness={0.2}
-                        color={COLORS.secondary} // Use secondary gray for the glass so it's visible against white
+                        color={COLORS.secondary}
                     />
                 </mesh>
 
@@ -146,12 +163,9 @@ function SceneContent({ scrollProgress = 0 }: { scrollProgress?: number }) {
             {/* Main geometric object */}
             <GlowingGeometry scrollProgress={scrollProgress} />
 
-            {/* Floating particles with nature-tech colors */}
-            <FloatingParticles count={150} spread={12} color={COLORS.primary} />
-            <FloatingParticles count={50} spread={8} color={COLORS.accent} size={0.02} />
-
-            {/* Environment for reflections */}
-            <Environment preset="night" />
+            {/* Floating particles - reduced count for performance */}
+            <FloatingParticles count={60} spread={12} color={COLORS.primary} />
+            <FloatingParticles count={20} spread={8} color={COLORS.accent} size={0.02} />
         </>
     )
 }
@@ -167,8 +181,8 @@ export function HeroScene({ className, scrollProgress = 0 }: HeroSceneProps) {
         <div className={className}>
             <Canvas
                 camera={{ position: [0, 0, 6], fov: 45 }}
-                dpr={[1, 2]}
-                gl={{ antialias: true, alpha: true }}
+                dpr={[1, 1.5]}
+                gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
             >
                 <Suspense fallback={null}>
                     <SceneContent scrollProgress={scrollProgress} />
