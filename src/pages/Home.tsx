@@ -220,12 +220,6 @@ const Home = () => {
 
             {/* Pricing Section (Old) */}
             <PricingSectionWithRobot />
-
-            {/* Integrations Section with Multi-Orbit */}
-            <section className="py-16 sm:py-24 relative bg-gray-50">
-                <SectionDivider direction="top" color="#FFFFFF" />
-                <MultiOrbitSemiCircle />
-            </section>
         </PageLayout>
     )
 }

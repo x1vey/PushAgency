@@ -147,7 +147,7 @@ const AboutPage = () => {
                                 About
                             </h1>
                             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light mb-8 tracking-tight text-black">
-                                Catalyst Digital
+                                4th Dimension
                             </h2>
                             <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
                                 Step into the world of digital transformation. We are more than developers—we are architects of scalable, intelligent systems that empower businesses to thrive.
@@ -272,10 +272,10 @@ const AboutPage = () => {
                                 <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
                                     Feel free to reach out if you have a project at{' '}
                                     <a
-                                        href="mailto:hello@catalystdigital.com"
+                                        href="mailto:hello@4thdimension.com"
                                         className="text-black font-bold hover:text-gray-700 transition-colors underline decoration-2 underline-offset-4"
                                     >
-                                        hello@catalystdigital.com
+                                        hello@4thdimension.com
                                     </a>
                                 </p>
                             </div>

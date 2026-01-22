@@ -7,69 +7,9 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { InteractiveRobotSpline } from '@/components/ui/interactive-3d-robot';
 import { SectionTransition, SectionDivider } from '@/components/ui/section-transition';
+import { pricingPlans } from '@/config/pricing';
 
-const plans = [
-    {
-        name: 'Starter',
-        price: '$107',
-        period: '/month',
-        description: 'Perfect for coaches just getting started',
-        features: [
-            { name: 'Custom landing page', included: true },
-            { name: 'Booking system integration', included: true },
-            { name: 'Basic email automation', included: true },
-            { name: 'Mobile responsive design', included: true },
-            { name: 'Monthly maintenance', included: true },
-            { name: 'Email support', included: true },
-            { name: 'Analytics dashboard', included: false },
-            { name: 'Custom web applications', included: false },
-            { name: 'Client portal', included: false },
-            { name: 'Priority support', included: false },
-        ],
-        cta: 'Get Started',
-        popular: false,
-    },
-    {
-        name: 'Growth',
-        price: '$150',
-        period: '/month',
-        description: 'For growing coaching businesses',
-        features: [
-            { name: 'Custom landing page', included: true },
-            { name: 'Booking system integration', included: true },
-            { name: 'Advanced email automation', included: true },
-            { name: 'Mobile responsive design', included: true },
-            { name: 'Priority maintenance & updates', included: true },
-            { name: 'Priority email support', included: true },
-            { name: 'Analytics dashboard', included: true },
-            { name: 'Basic web applications', included: true },
-            { name: 'Client portal', included: true },
-            { name: 'Custom API development', included: false },
-        ],
-        cta: 'Get Started',
-        popular: true,
-    },
-    {
-        name: 'Enterprise',
-        price: "Let's Talk",
-        period: '',
-        description: 'For established businesses ready to scale',
-        features: [
-            { name: 'Everything in Growth', included: true },
-            { name: 'Custom web applications', included: true },
-            { name: 'Advanced client portal', included: true },
-            { name: 'Custom API development', included: true },
-            { name: 'Priority support + Slack', included: true },
-            { name: 'Dedicated account manager', included: true },
-            { name: 'Multi-platform integrations', included: true },
-            { name: 'Custom reporting', included: true },
-            { name: 'White-label solutions', included: true },
-            { name: 'SLA guarantee', included: true },
-        ],
-        cta: 'Schedule a Call',
-        popular: false,
-    },
-];
+
 
 export function PricingSectionWithRobot() {
     const [focusedCard, setFocusedCard] = useState<number | null>(null);
@@ -146,7 +86,7 @@ export function PricingSectionWithRobot() {
                         ref={cardsContainerRef}
                         className="grid md:grid-cols-3 gap-6 sm:gap-8"
                     >
-                        {plans.map((plan, index) => (
+                        {pricingPlans.map((plan, index) => (
                             <motion.div
                                 key={index}
                                 onMouseEnter={() => setFocusedCard(index)}

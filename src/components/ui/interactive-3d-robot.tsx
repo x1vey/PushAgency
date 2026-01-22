@@ -1,6 +1,7 @@
 'use client';
 
 import { Suspense, lazy } from 'react';
+import type { Application } from '@splinetool/runtime';
 const Spline = lazy(() => import('@splinetool/react-spline'));
 
 interface InteractiveRobotSplineProps {
@@ -9,6 +10,38 @@ interface InteractiveRobotSplineProps {
 }
 
 export function InteractiveRobotSpline({ scene, className }: InteractiveRobotSplineProps) {
+  const onLoad = (spline: Application) => {
+    const allObjects = spline.getAllObjects();
+
+    allObjects.forEach((obj: any) => {
+      // Maximum ambient light to kill all shadows
+      if (obj.type === 'AmbientLight') {
+        if (obj.intensity !== undefined) {
+          obj.intensity = 3.0; // Extremely strong ambient light
+        }
+      }
+
+      // Also boost all other lights and reposition them for even coverage
+      if (obj.type === 'DirectionalLight') {
+        if (obj.intensity !== undefined) {
+          obj.intensity = 1.2; // Strong directional lights too
+        }
+        // Position from front to minimize shadows
+        obj.position.set(0, 100, 500);
+        if (obj.lookAt) {
+          obj.lookAt(0, 0, 0);
+        }
+      }
+
+      // Boost point lights if they exist
+      if (obj.type === 'PointLight') {
+        if (obj.intensity !== undefined) {
+          obj.intensity = 2.0;
+        }
+      }
+    });
+  };
+
   return (
     <Suspense
       fallback={
@@ -29,16 +62,17 @@ export function InteractiveRobotSpline({ scene, className }: InteractiveRobotSpl
             top: 0,
             left: 0,
             right: 0,
-            bottom: '-50px', // Extend past the container to push watermark out
+            bottom: '-50px',
             overflow: 'hidden',
           }}
         >
           <Spline
             scene={scene}
+            onLoad={onLoad}
             style={{
               width: '100%',
-              height: 'calc(100% + 50px)', // Match the extended height
-              filter: 'brightness(1.3) contrast(1.1) saturate(1.2)', // Lighter, more vibrant robot
+              height: 'calc(100% + 50px)',
+              filter: 'brightness(1.6) contrast(0.95) saturate(1.2) drop-shadow(0 0 20px rgba(255,255,255,0.3))', // Lower contrast to reduce shadow depth
             }}
           />
         </div>

@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from 'framer-motion';
 import { InteractiveRobotSpline } from '@/components/ui/interactive-3d-robot';
+import { pricingPlans, comparisonFeatures } from '@/config/pricing';
+import { Link } from 'react-router-dom';
 
 function Pricing() {
     const [focusedCard, setFocusedCard] = useState<number | null>(null);
@@ -28,7 +30,7 @@ function Pricing() {
                             Prices that make sense!
                         </h2>
                         <p className="text-lg leading-relaxed tracking-tight text-muted-foreground max-w-xl text-center">
-                            Managing a small business today is already tough.
+                            Choose the plan that fits your business stage.
                         </p>
                     </div>
 
@@ -57,139 +59,57 @@ function Pricing() {
 
                     <div className="grid text-left w-full grid-cols-3 lg:grid-cols-4 divide-x pt-20 relative z-0">
                         <div className="col-span-3 lg:col-span-1"></div>
-                        <div
-                            className="px-3 py-1 md:px-6 md:py-4 gap-2 flex flex-col transition-colors hover:bg-muted/50 rounded-t-xl"
-                            onMouseEnter={() => setFocusedCard(0)}
-                            onMouseLeave={() => setFocusedCard(null)}
-                        >
-                            <p className="text-2xl">Startup</p>
-                            <p className="text-sm text-muted-foreground">
-                                Our goal is to streamline SMB trade, making it easier and faster
-                                than ever for everyone and everywhere.
-                            </p>
-                            <p className="flex flex-col lg:flex-row lg:items-center gap-2 text-xl mt-8">
-                                <span className="text-4xl">$40</span>
-                                <span className="text-sm text-muted-foreground"> / month</span>
-                            </p>
-                            <Button variant="outline" className="gap-4 mt-8">
-                                Try it <MoveRight className="w-4 h-4" />
-                            </Button>
-                        </div>
-                        <div
-                            className="px-3 py-1 md:px-6 md:py-4 gap-2 flex flex-col transition-colors hover:bg-muted/50 rounded-t-xl"
-                            onMouseEnter={() => setFocusedCard(1)}
-                            onMouseLeave={() => setFocusedCard(null)}
-                        >
-                            <p className="text-2xl">Growth</p>
-                            <p className="text-sm text-muted-foreground">
-                                Our goal is to streamline SMB trade, making it easier and faster
-                                than ever for everyone and everywhere.
-                            </p>
-                            <p className="flex flex-col lg:flex-row lg:items-center gap-2 text-xl mt-8">
-                                <span className="text-4xl">$40</span>
-                                <span className="text-sm text-muted-foreground"> / month</span>
-                            </p>
-                            <Button className="gap-4 mt-8">
-                                Try it <MoveRight className="w-4 h-4" />
-                            </Button>
-                        </div>
-                        <div
-                            className="px-3 py-1 md:px-6 md:py-4 gap-2 flex flex-col transition-colors hover:bg-muted/50 rounded-t-xl"
-                            onMouseEnter={() => setFocusedCard(2)}
-                            onMouseLeave={() => setFocusedCard(null)}
-                        >
-                            <p className="text-2xl">Enterprise</p>
-                            <p className="text-sm text-muted-foreground">
-                                Our goal is to streamline SMB trade, making it easier and faster
-                                than ever for everyone and everywhere.
-                            </p>
-                            <p className="flex flex-col lg:flex-row lg:items-center gap-2 text-xl mt-8">
-                                <span className="text-4xl">$40</span>
-                                <span className="text-sm text-muted-foreground"> / month</span>
-                            </p>
-                            <Button variant="outline" className="gap-4 mt-8">
-                                Contact us <PhoneCall className="w-4 h-4" />
-                            </Button>
-                        </div>
+                        {pricingPlans.map((plan, index) => (
+                            <div
+                                key={plan.name}
+                                className="px-3 py-1 md:px-6 md:py-4 gap-2 flex flex-col transition-colors hover:bg-muted/50 rounded-t-xl"
+                                onMouseEnter={() => setFocusedCard(index)}
+                                onMouseLeave={() => setFocusedCard(null)}
+                            >
+                                <p className="text-2xl">{plan.name}</p>
+                                <p className="text-sm text-muted-foreground">
+                                    {plan.description}
+                                </p>
+                                <p className="flex flex-col lg:flex-row lg:items-center gap-2 text-xl mt-8">
+                                    <span className="text-4xl">{plan.price}</span>
+                                    {plan.period && <span className="text-sm text-muted-foreground">{plan.period}</span>}
+                                </p>
+                                <Link to="/booking">
+                                    <Button
+                                        variant={index === 1 ? "default" : "outline"}
+                                        className="gap-4 mt-8 w-full"
+                                    >
+                                        {plan.cta} {index === 2 ? <PhoneCall className="w-4 h-4" /> : <MoveRight className="w-4 h-4" />}
+                                    </Button>
+                                </Link>
+                            </div>
+                        ))}
+
+                        {/* Features Header */}
                         <div className="px-3 lg:px-6 col-span-3 lg:col-span-1  py-4">
                             <b>Features</b>
                         </div>
                         <div></div>
                         <div></div>
                         <div></div>
-                        <div className="px-3 lg:px-6 col-span-3 lg:col-span-1 py-4">SSO</div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Check className="w-4 h-4 text-primary" />
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Check className="w-4 h-4 text-primary" />
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Check className="w-4 h-4 text-black" />
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Check className="w-4 h-4 text-black" />
-                        </div>
-                        <div className="px-3 lg:px-6 col-span-3 lg:col-span-1 py-4">
-                            AI Assistant
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Minus className="w-4 h-4 text-gray-300" />
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Check className="w-4 h-4 text-black" />
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Check className="w-4 h-4 text-black" />
-                        </div>
-                        <div className="px-3 lg:px-6 col-span-3 lg:col-span-1 py-4">
-                            Version Control
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Minus className="w-4 h-4 text-muted-foreground" />
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Check className="w-4 h-4 text-primary" />
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Check className="w-4 h-4 text-primary" />
-                        </div>
-                        <div className="px-3 lg:px-6 col-span-3 lg:col-span-1 py-4">
-                            Members
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <p className="text-muted-foreground text-sm">5 members</p>
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <p className="text-muted-foreground text-sm">25 members</p>
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <p className="text-muted-foreground text-sm">100+ members</p>
-                        </div>
-                        <div className="px-3 lg:px-6 col-span-3 lg:col-span-1 py-4">
-                            Multiplayer Mode
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Minus className="w-4 h-4 text-muted-foreground" />
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Check className="w-4 h-4 text-primary" />
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Check className="w-4 h-4 text-primary" />
-                        </div>
-                        <div className="px-3 lg:px-6 col-span-3 lg:col-span-1 py-4">
-                            Orchestration
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Minus className="w-4 h-4 text-muted-foreground" />
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Check className="w-4 h-4 text-primary" />
-                        </div>
-                        <div className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
-                            <Check className="w-4 h-4 text-primary" />
-                        </div>
+
+                        {/* Feature Rows */}
+                        {comparisonFeatures.map((feature, featureIndex) => (
+                            <>
+                                <div key={`label-${featureIndex}`} className="px-3 lg:px-6 col-span-3 lg:col-span-1 py-4">
+                                    {feature.name}
+                                </div>
+                                {feature.availability.map((available, planIndex) => (
+                                    <div key={`${featureIndex}-${planIndex}`} className="px-3 py-1 md:px-6 md:py-4 flex justify-center">
+                                        {available === true && <Check className="w-4 h-4 text-black" />}
+                                        {available === false && <Minus className="w-4 h-4 text-gray-300" />}
+                                        {typeof available === 'string' && (
+                                            <p className="text-muted-foreground text-sm">{available}</p>
+                                        )}
+                                    </div>
+                                ))}
+                            </>
+                        ))}
                     </div>
                 </div>
             </div>

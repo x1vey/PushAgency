@@ -11,7 +11,7 @@ const Footer = () => {
                             <Zap className="w-5 h-5 text-white" fill="currentColor" />
                         </div>
                         <span className="text-xl font-bold tracking-tight text-black">
-                            Catalyst Digital
+                            4th Dimension
                         </span>
                     </Link>
 
@@ -24,7 +24,7 @@ const Footer = () => {
                 </div>
 
                 <div className="text-center text-gray-400 text-sm">
-                    &copy; {new Date().getFullYear()} Catalyst Digital. All rights reserved.
+                    &copy; {new Date().getFullYear()} 4th Dimension. All rights reserved.
                 </div>
             </div>
         </footer>

@@ -37,7 +37,7 @@ const Navbar = () => {
             <div className="container mx-auto px-6 flex justify-between items-center">
                 <Link to="/" className="flex items-center gap-3">
                     <ProfileCard
-                        name="Catalyst Digital"
+                        name="4th Dimension"
                         role="Tech Solutions"
                         useIcon={true}
                     />
